@@ -1,0 +1,48 @@
+package code;
+
+import java.util.Objects;
+
+/**
+ * 
+ * @authro Dave
+ * @author Kelvin
+ *
+ */
+public class CalcController {
+  CalcModel c = CalcModel.getInstance();
+  ViewInterface myView = null;
+
+  private void calculateAction() {
+    float a = c.evaluate(myView.getExpression(),myView.isinfix());
+    String str = String.valueOf(a);
+    myView.setAnswer(str);
+  }
+
+  private void changeType(OpType t) {
+    myView.setAnswer("Changed to " + t);
+  }
+
+  public CalcController(ViewInterface v) {
+    myView = v;
+    v.addCalcObserver(this::calculateAction);
+    v.addTypeObserver(this::changeType);
+  }
+  //hash code and equals method, generated at 12/12/2019
+	@Override
+	public int hashCode() {
+		return Objects.hash(c, myView);
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (!(obj instanceof CalcController)) {
+			return false;
+		}
+		CalcController other = (CalcController) obj;
+		return Objects.equals(c, other.c) && Objects.equals(myView, other.myView);
+	}
+	//hash code and equals() ends here.
+}
